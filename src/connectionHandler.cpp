@@ -11,13 +11,12 @@
 #include "connectionHandler.hpp"
 #include <string.h>
 #include <iostream>
-//#include <exception.h>
+// #include <exception.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <netdb.h>
-//#include <unistd.h>
-
+// #include <netinet/in.h>
+// #include <netdb.h>
+// #include <unistd.h>
 
 using namespace std;
 
@@ -29,8 +28,8 @@ using namespace std;
  * Description: Default Constructor
  * *****************************************
  */
-connectionHandler::connectionHandler() {
-    
+connectionHandler::connectionHandler()
+{
 }
 
 /* *****************************************
@@ -41,10 +40,12 @@ connectionHandler::connectionHandler() {
  * Description: Copy Constructor
  * *****************************************
  */
-connectionHandler::connectionHandler(const connectionHandler& orig) {
+connectionHandler::connectionHandler(const connectionHandler &orig)
+{
 }
 
-connectionHandler::~connectionHandler() {
+connectionHandler::~connectionHandler()
+{
 }
 /* *****************************************
  * Name:
@@ -54,7 +55,8 @@ connectionHandler::~connectionHandler() {
  * Description:
  * *****************************************
  */
-int connectionHandler::setServerInfo() {
+int connectionHandler::setServerInfo()
+{
 
     /*
      * serverInfo->ai_family = AF_INET; // AF_INET, AF_INET6, AF_UNSPEC
@@ -69,7 +71,7 @@ int connectionHandler::setServerInfo() {
 
     // obviously this should not be hard coded...change the setter so it can
     // be called from outside the class, e.g. from main()
-    
+
     myConnection.ai_family = AF_INET;
     myConnection.ai_socktype = SOCK_STREAM;
     myConnection.ai_protocol = 0;
@@ -85,30 +87,32 @@ int connectionHandler::setServerInfo() {
  * Description:
  * *****************************************
  */
-int connectionHandler::makeSocket() {
+int connectionHandler::makeSocket()
+{
 
     retVal returnCode = static_cast<retVal>(connectionHandler::setServerInfo());
 
     // should this be in a try/catch?
-    try {
-      
+    try
+    {
+
         if ((socketFileDescriptor = socket(myConnection.ai_family,
-                myConnection.ai_socktype,
-                myConnection.ai_protocol)) == -1 )
+                                           myConnection.ai_socktype,
+                                           myConnection.ai_protocol)) == -1)
         {
             cerr << "makeSocket() failed \n";
-            
+
             returnCode = ERROR;
         }
-    } catch (exception& e) {
+    }
+    catch (exception &e)
+    {
         cout << "Standard exception: " << e.what() << endl;
-        
     }
 
-
-    //try {
-    // bind(socketFileDescriptor,,)
-    // } catch () { returnCode = ERROR }
+    // try {
+    //  bind(socketFileDescriptor,,)
+    //  } catch () { returnCode = ERROR }
 
     return returnCode;
 }
